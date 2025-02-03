@@ -44,6 +44,17 @@ class _CalculatorState extends State<Calculator> {
       } catch (e) {
         _output = "Error";
       }
+    } else if (buttonText == "x²") {
+      try {
+        final expression = Expression.parse(_expression);
+        final evaluator = const ExpressionEvaluator();
+        final result = evaluator.eval(expression, {});
+        final squaredResult = result * result;
+        _output = squaredResult.toString();
+        _expression += "² = " + _output;
+      } catch (e) {
+        _output = "Error";
+      }
     } else {
       if (_expression.contains("=")) {
         _expression = buttonText;
@@ -62,13 +73,16 @@ class _CalculatorState extends State<Calculator> {
     return Expanded(
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.all(24.0),
-          side: BorderSide(color: textColor),
-          backgroundColor: Colors.black87
-        ),
+            padding: EdgeInsets.all(24.0),
+            side: BorderSide(color: textColor),
+            backgroundColor: Colors.black87),
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: textColor,),
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: textColor,
+          ),
         ),
         onPressed: () => _buttonPressed(buttonText),
       ),
@@ -79,7 +93,10 @@ class _CalculatorState extends State<Calculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculator - Jonas Genao Abreu', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text(
+          'Calculator - Jonas Genao Abreu',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -88,7 +105,10 @@ class _CalculatorState extends State<Calculator> {
             padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
             child: Text(
               _expression,
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.orange),
+              style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange),
             ),
           ),
           Container(
@@ -96,7 +116,10 @@ class _CalculatorState extends State<Calculator> {
             padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
             child: Text(
               _output,
-              style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold, color: Colors.orange),
+              style: TextStyle(
+                  fontSize: 48.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange),
             ),
           ),
           Expanded(
@@ -140,6 +163,7 @@ class _CalculatorState extends State<Calculator> {
                 children: <Widget>[
                   _buildButton("C", Colors.red),
                   _buildButton("=", Colors.orange),
+                  _buildButton("x²", Colors.blue),
                 ],
               ),
             ],
